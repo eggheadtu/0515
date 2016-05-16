@@ -6,9 +6,7 @@ output: github_document
  
 =========================================== 
  
-資料前處理 
----------- 
- 
+#資料前處理 
 ### 把資料讀進來 
  
 把資料跟此檔案放在同一個地方，然後讀進來。 
@@ -43,8 +41,8 @@ melt要先下載reshape才可用。
     polio.sumYear = aggregate(value~YEAR+variable,data=polio.m,FUN=sum,na.rm=F) 
     head(polio.sumYear) 
  
-視覺化呈現 
----------- 
+#視覺化呈現 
+
  
 ### 先下載ggplot2才可以用 
  
@@ -63,22 +61,22 @@ melt要先下載reshape才可用。
  
 用ggplot2作圖，x=YEAR；y=variable， 
  
-旁邊標記顏色的title為「發生率」，數值越高顏色越接近紫色，越低越接近白色， 
+旁邊標記顏色的title為「發生率」，數值越高顏色越接近藍色，越低越接近白色， 
  
 並在1955年上畫上一條黑色虛線。 
  
-    p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYear$value),colour = "white") + scale_fill_gradient(name="發生率", low = "white",high = "Blue")+ geom_vline(xintercept = 1955,colour= "black",linetype = "longdash" ) 
+    p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYear$value),colour = "white") + scale_fill_gradient(name="發生率", low = "white",high = "steelblue")+ geom_vline(xintercept = 1955,colour= "black",linetype = "longdash" )  
     print(p) 
  
 ### 圖形呈現，按照是否可以輕易看懂圖形給分 
  
-![小兒麻痺在美國各州的發生率變化](https://raw.githubusercontent.com/sres320/image/master/0516.png) 
+![小兒麻痺在美國各州的發生率變化](https://raw.githubusercontent.com/eggheadtu/0515/master/pic0517.png) 
  
 ### 解釋圖形 
  
-我將美國各州放在y軸(即variable)，年份為x軸， 
+y軸為美國各州名稱(variable)，x軸為年分， 
  
-並在1955年畫上標記，因為該年開始有小兒麻痺疫苗， 
+並於1955年畫上標記，因該年開始有小兒麻痺疫苗， 
  
 可以很明顯的看出從1930左右小兒麻痺日趨嚴重，並在1950年代到達顛峰， 
  
