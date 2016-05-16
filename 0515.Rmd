@@ -3,20 +3,17 @@ title: "1928-1969間，小兒麻痺在美國各州的發生率變化"
 output: github_document
 ---
 
- 
-=========================================== 
- 
 #資料前處理 
 ### 把資料讀進來 
  
-把資料跟此檔案放在同一個地方，然後讀進來。 
+把資料跟此檔案放在同一個地方，然後讀進來 
  
     polio = read.csv("POLIO_Incidence.csv",stringsAsFactors=F) 
     head(polio) 
  
 ### 將寬表格轉為長表格 
  
-將寬表格轉為長表格,以年(YEAR)/週(WEEK)為基準,各州名column打散變長， 
+將寬表格轉為長表格,以年(YEAR)/週(WEEK)為基準,各州名column打散變長
  
 melt要先下載reshape才可用。 
  
@@ -27,7 +24,7 @@ melt要先下載reshape才可用。
  
 ### 處理缺值 
  
-處理缺值,將"-"轉為NA，將value欄位轉為數值。。 
+處理缺值,將"-"轉為NA，將value欄位轉為數值
  
 (因為一些讀資料方面的問題，所以要用as.character()先轉一次值) 
  
@@ -36,7 +33,7 @@ melt要先下載reshape才可用。
  
 ### 計算年度發生率 
  
-各州各年度加總，計算該年度的總發生率。 
+各州各年度加總，計算該年度的總發生率
  
     polio.sumYear = aggregate(value~YEAR+variable,data=polio.m,FUN=sum,na.rm=F) 
     head(polio.sumYear) 
@@ -51,19 +48,19 @@ melt要先下載reshape才可用。
  
 ### 解釋如何選擇圖形種類 
  
-因為覺得要放入三個面向的資料(三維)，就想到heatmap這個形式來表示， 
+因為覺得要放入三個面向的資料(三維)，就想到heatmap這個形式來表示，
  
-因為它包含X.Y軸，並且可以在相對應的空格填上顏色做第三種註記， 
+因為它包含X.Y軸，並且可以在相對應的空格填上顏色做第三種註記 
  
-第三種註記即是各州各年分加總，我以紫色作為註記。 
+第三種註記即是各州各年分加總，我以藍色作為註記。
  
 ### 程式碼 
  
-用ggplot2作圖，x=YEAR；y=variable， 
+用ggplot2作圖，x=YEAR；y=variable 
  
-旁邊標記顏色的title為「發生率」，數值越高顏色越接近藍色，越低越接近白色， 
+旁邊標記顏色的title為「發生率」，數值越高顏色越接近藍色，越低越接近白色
  
-並在1955年上畫上一條黑色虛線。 
+並在1955年上畫上一條黑色虛線
  
     p=ggplot(polio.sumYear, aes(YEAR, variable)) + geom_tile(aes(fill = polio.sumYear$value),colour = "white") + scale_fill_gradient(name="發生率", low = "white",high = "steelblue")+ geom_vline(xintercept = 1955,colour= "black",linetype = "longdash" )  
     print(p) 
@@ -74,12 +71,12 @@ melt要先下載reshape才可用。
  
 ### 解釋圖形 
  
-y軸為美國各州名稱(variable)，x軸為年分， 
+y軸為美國各州名稱(variable)，x軸為年分，
  
-並於1955年畫上標記，因該年開始有小兒麻痺疫苗， 
+並於1955年畫上標記，因該年開始有小兒麻痺疫苗 
  
-可以很明顯的看出從1930左右小兒麻痺日趨嚴重，並在1950年代到達顛峰， 
+可以很明顯的看出從1930左右小兒麻痺日趨嚴重，並在1950年代到達顛峰
  
-但在1955年疫苗產生後，在虛線的右邊可以說是幾乎看不到紫色的蹤跡， 
+但在1955年疫苗產生後，在虛線的右邊可以說是幾乎看不到紫色的蹤跡
  
-這代表小兒麻痺發生率逐日降低。
+這代表小兒麻痺發生率逐日降低
